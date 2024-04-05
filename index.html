@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <title>بالوتي</title>
+</head>
+
+<body>
+
+  <main class="container">
+    <h1>بالوتي</h1>
+    <form>
+      <fieldset class="grid">
+        <input required type="number" placeholder="الفريق الأوّل" id="firstTeamInput">
+        <input required type="number" placeholder="الفريق الثاني" id="secondTeamInput">
+      </fieldset>
+      <input type="submit" value="إضافة">
+    </form>
+    <h2>النشرة <span id="firstTeamScore"></span> : <span id="secondTeamScore"></span></h2>
+  </main>
+  <script>
+    firstTeamScore = 0
+    secondTeamScore = 0
+    document.querySelector("#firstTeamScore").innerHTML = firstTeamScore
+    document.querySelector("#secondTeamScore").innerHTML = secondTeamScore
+
+    document.querySelector("form").onsubmit = (event) => {
+      event.preventDefault()
+      firstTeamScore += Number(document.querySelector("#firstTeamInput").value)
+      secondTeamScore += Number(document.querySelector("#secondTeamInput").value)
+      document.querySelector("#firstTeamScore").innerHTML = firstTeamScore
+      document.querySelector("#secondTeamScore").innerHTML = secondTeamScore
+      document.querySelector("#firstTeamInput").value = ""
+      document.querySelector("#secondTeamInput").value = ""
+    }
+  </script>
+</body>
+
+</html>
