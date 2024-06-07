@@ -19,20 +19,37 @@
       </fieldset>
       <input type="submit" value="إضافة">
     </form>
-    <h2>النشرة <span id="firstTeamScore"></span> : <span id="secondTeamScore"></span></h2>
+    <h2>النشرة <span id="firstTeamScore">0</span> : <span id="secondTeamScore">0</span></h2>
+    <h2 id="scoreHistory"></h2>
   </main>
   <script>
-    firstTeamScore = 0
-    secondTeamScore = 0
-    document.querySelector("#firstTeamScore").innerHTML = firstTeamScore
-    document.querySelector("#secondTeamScore").innerHTML = secondTeamScore
+    let firstTeamScore = 0
+    let secondTeamScore = 0
+    let scores = [[firstTeamScore, secondTeamScore]]
 
     document.querySelector("form").onsubmit = (event) => {
       event.preventDefault()
+      updateTotalScore()
+      resetScoreInput()
+
+      let scoreTallyHTML = ""
+      scores.map(scores => {
+        scoreTallyHTML =
+          scoreTallyHTML + `<div><span>${scores[0]}</span> : <span>${scores[1]}</span></div>`
+      })
+
+      document.querySelector("#scoreHistory").innerHTML = scoreTallyHTML
+    }
+
+    function updateTotalScore() {
       firstTeamScore += Number(document.querySelector("#firstTeamInput").value)
       secondTeamScore += Number(document.querySelector("#secondTeamInput").value)
+      scores.push([firstTeamScore, secondTeamScore])
       document.querySelector("#firstTeamScore").innerHTML = firstTeamScore
       document.querySelector("#secondTeamScore").innerHTML = secondTeamScore
+    }
+
+    function resetScoreInput() {
       document.querySelector("#firstTeamInput").value = ""
       document.querySelector("#secondTeamInput").value = ""
     }
