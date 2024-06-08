@@ -25,26 +25,40 @@
   <script>
     let firstTeamScore = 0
     let secondTeamScore = 0
-    let scores = [[firstTeamScore, secondTeamScore]]
+    let scoreHistory = [[firstTeamScore, secondTeamScore]]
 
     document.querySelector("form").onsubmit = (event) => {
       event.preventDefault()
       updateTotalScore()
       resetScoreInput()
 
-      let scoreTallyHTML = ""
-      scores.map(scores => {
-        scoreTallyHTML =
-          scoreTallyHTML + `<div><span>${scores[0]}</span> : <span>${scores[1]}</span></div>`
-      })
-
-      document.querySelector("#scoreHistory").innerHTML = scoreTallyHTML
+      updateScoreHistoryHTML()
     }
 
     function updateTotalScore() {
       firstTeamScore += Number(document.querySelector("#firstTeamInput").value)
       secondTeamScore += Number(document.querySelector("#secondTeamInput").value)
-      scores.push([firstTeamScore, secondTeamScore])
+      scoreHistory.push([firstTeamScore, secondTeamScore])
+      updateTeamScoresHTML()
+    }
+
+    function updateScoreHistoryHTML() {
+      let scoreHistoryHTML = ""
+      scoreHistory.map((scores, i) => {
+        scoreHistoryHTML =
+          scoreHistoryHTML +
+          `<div>
+            <span>${scores[0]}</span> : <span>${scores[1]}</span>
+          ${i == scoreHistory.length - 1 ?
+            '<button onclick="onDeleteCurrentScore()" id="deleteCurrentScore">X</button>' :
+            ""}
+        </div>`
+      })
+
+      document.querySelector("#scoreHistory").innerHTML = scoreHistoryHTML
+    }
+
+    function updateTeamScoresHTML() {
       document.querySelector("#firstTeamScore").innerHTML = firstTeamScore
       document.querySelector("#secondTeamScore").innerHTML = secondTeamScore
     }
@@ -52,6 +66,14 @@
     function resetScoreInput() {
       document.querySelector("#firstTeamInput").value = ""
       document.querySelector("#secondTeamInput").value = ""
+    }
+
+    function onDeleteCurrentScore() {
+      scoreHistory.pop()
+      firstTeamScore = scoreHistory.at(-1)[0]
+      secondTeamScore = scoreHistory.at(-1)[1]
+      updateTeamScoresHTML()
+      updateScoreHistoryHTML()
     }
   </script>
 </body>
