@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
   <title>بالوتي</title>
+  <style>
+    .centered {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,8 +24,9 @@
       </fieldset>
       <input type="submit" value="إضافة">
     </form>
-    <h2>النشرة <span id="firstTeamScore">0</span> : <span id="secondTeamScore">0</span></h2>
-    <h2 id="scoreHistory"></h2>
+    <h2 class="centered">النشرة </h2>
+    <h2 class="centered"><span id="firstTeamScore">0</span> : <span id="secondTeamScore">0</span></h2>
+    <h2 class="centered" id="scoreHistory"></h2>
   </main>
   <script>
     let firstTeamScore = 0
@@ -47,10 +53,10 @@
       scoreHistory.map((scores, i) => {
         scoreHistoryHTML =
           scoreHistoryHTML +
-          `<div>
+          `<div style="position: relative;">
             <span>${scores[0]}</span> : <span>${scores[1]}</span>
           ${i == scoreHistory.length - 1 ?
-            '<button onclick="onDeleteCurrentScore()" id="deleteCurrentScore">X</button>' :
+            '<button style="position: absolute; left: 5px;" onclick="onDeleteCurrentScore()" id="deleteCurrentScore">X</button>' :
             ""}
         </div>`
       })
