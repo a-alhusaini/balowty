@@ -42,10 +42,22 @@
     }
 
     function updateTotalScore() {
-      firstTeamScore += Number(document.querySelector("#firstTeamInput").value)
-      secondTeamScore += Number(document.querySelector("#secondTeamInput").value)
-      scoreHistory.push([firstTeamScore, secondTeamScore])
+
+      scoreHistory.push([
+        Number(document.querySelector("#firstTeamInput").value),
+        Number(document.querySelector("#secondTeamInput").value)
+      ])
+      calculateTeamScores()
       updateTeamScoresHTML()
+    }
+
+    function calculateTeamScores() {
+      firstTeamScore = 0
+      secondTeamScore = 0
+      scoreHistory.map((scores) => {
+        firstTeamScore += scores[0]
+        secondTeamScore += scores[1]
+      })
     }
 
     function updateScoreHistoryHTML() {
@@ -76,8 +88,7 @@
 
     function onDeleteCurrentScore() {
       scoreHistory.pop()
-      firstTeamScore = scoreHistory.at(-1)[0]
-      secondTeamScore = scoreHistory.at(-1)[1]
+      calculateTeamScores()
       updateTeamScoresHTML()
       updateScoreHistoryHTML()
     }
